@@ -39,19 +39,43 @@ function getAvailableDate(firstRow) {
 
 function getAllCraigslistPostInfo() {
   const firstRow = document.getElementsByClassName('shared-line-bubble');
+  let craigslistPostInfo = {};
   if (firstRow.length) {
     if (firstRow.length > 0) {
-      let craigslistPostInfo = {
+      craigslistPostInfo = {
         numBedrooms: getNumBedrooms(firstRow),
         numBathrooms: getNumBathrooms(firstRow),
         availableDate: getAvailableDate(firstRow)
       };
-      return craigslistPostInfo;
     }
+    craigslistPostInfo = getSecondRowInfo(craigslistPostInfo);
+    return craigslistPostInfo;
   }
 }
 
-chrome.runtime.onMessage.addListener(function(request, sender) {
+function getSecondRowInfo(craigslistPostInfo) {
+  const sections = [].slice.call(document.getElementsByClassName('attrgroup'));
+  sections.forEach(section => {
+    const spans = [].slice.call(section.children).filter(el => el.tagName === 'SPAN');
+    spans.forEach(span => {
+      if (/parking/i.test(span.innerText) || /garage/i.test(span.innerText)) {
+        craigslistPostInfo.parking = span.innerText;
+      }
+      if (/house/i.test(span.innerText) || /apartment/i.test(span.innerText) || /condo/i.test(span.innerText) || /duplex/i.test(span.innerText)) {
+        craigslistPostInfo.housingType = span.innerText;
+      }
+      if (/w\/d/i.test(span.innerText) || /laundry/i.test(span.innerText)) {
+        craigslistPostInfo.washerDryer = span.innerText;
+      }
+      if (/furnished/i.test(span.innerText)) {
+        craigslistPostInfo.furnished = 'Yes';
+      }
+    });
+  });
+  return craigslistPostInfo;
+}
+
+chrome.runtime.onMessage.addListener((request, sender) => {
   switch(request.message) {
     case 'GET CL INFO':
       chrome.runtime.sendMessage({ message: 'CL POST INFO', craigslistPostInfo: getAllCraigslistPostInfo() });
