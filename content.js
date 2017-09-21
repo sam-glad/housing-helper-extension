@@ -37,22 +37,6 @@ function getAvailableDate(firstRow) {
   return availableDateFullString.split('available ')[1]; // E.g. 'oct 1'
 }
 
-function getAllCraigslistPostInfo() {
-  const firstRow = document.getElementsByClassName('shared-line-bubble');
-  let craigslistPostInfo = {};
-  if (firstRow.length) {
-    if (firstRow.length > 0) {
-      craigslistPostInfo = {
-        numBedrooms: getNumBedrooms(firstRow),
-        numBathrooms: getNumBathrooms(firstRow),
-        availableDate: getAvailableDate(firstRow)
-      };
-    }
-    craigslistPostInfo = getSecondRowInfo(craigslistPostInfo);
-    return craigslistPostInfo;
-  }
-}
-
 function getSecondRowInfo(craigslistPostInfo) {
   const sections = [].slice.call(document.getElementsByClassName('attrgroup'));
   sections.forEach(section => {
@@ -73,6 +57,43 @@ function getSecondRowInfo(craigslistPostInfo) {
     });
   });
   return craigslistPostInfo;
+}
+
+function getTitleInfo(craigslistPostInfo) {
+  const titleArray = document.querySelectorAll('h2.postingtitle');
+  if (titleArray.length && titleArray.length !== 1) {
+    const errorMessage = 'Something went wrong while trying to get the title :(';
+    alert(errorMessage);
+    throw new Error(errorMessage);
+  }
+  const title = titleArray[0];
+  // TODO: Add some validation/checks here
+  const titleSpan = [].slice.call(document.querySelectorAll('h2.postingtitle')[0].children).filter(child => child.className === 'postingtitletext')[0];
+  const titleChildren = [].slice.call(titleSpan.children);
+  craigslistPostInfo.price = parseInt(titleChildren.filter(child => child.className === 'price')[0].innerText.replace('$',''));
+  // TODO: validation
+  craigslistPostInfo.squareFootage = document.querySelectorAll('span.housing')[0].innerText.match(/\d+ft2/i)[0].match(/\d+/)[0];
+  craigslistPostInfo.title = document.getElementById('titletextonly').innerText;
+  return craigslistPostInfo;
+}
+
+function getAllCraigslistPostInfo() {
+  const firstRow = document.getElementsByClassName('shared-line-bubble');
+  let craigslistPostInfo = {};
+  if (firstRow.length) {
+    if (firstRow.length > 0) {
+      craigslistPostInfo = {
+        numBedrooms: getNumBedrooms(firstRow),
+        numBathrooms: getNumBathrooms(firstRow),
+        availableDate: getAvailableDate(firstRow)
+      };
+    }
+    craigslistPostInfo = getSecondRowInfo(craigslistPostInfo);
+    craigslistPostInfo = getTitleInfo(craigslistPostInfo);
+    craigslistPostInfo.url = window.location.href;
+    craigslistPostInfo.id = window.location.href.match(/\d+\.html/i)[0].replace(/\.html/i, '');
+    return craigslistPostInfo;
+  }
 }
 
 chrome.runtime.onMessage.addListener((request, sender) => {
