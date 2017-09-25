@@ -1,6 +1,6 @@
 {
   "name": "Housing Shortcut",
-  "version": "0.0.0.1",
+  "version": "1.0.0.0",
   "permissions": ["tabs", "activeTab", "<all_urls>"],
   "background": {
     "scripts": ["background.js"]

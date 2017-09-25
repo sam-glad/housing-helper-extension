@@ -42,7 +42,7 @@ function getSecondRowInfo(craigslistPostInfo) {
   sections.forEach(section => {
     const spans = [].slice.call(section.children).filter(el => el.tagName === 'SPAN');
     spans.forEach(span => {
-      if (/parking/i.test(span.innerText) || /garage/i.test(span.innerText)) {
+      if (/parking/i.test(span.innerText) || /garage/i.test(span.innerText) || /carport/i.test(span.innerText)) {
         craigslistPostInfo.parking = span.innerText;
       }
       if (/house/i.test(span.innerText) || /apartment/i.test(span.innerText) || /condo/i.test(span.innerText) || /duplex/i.test(span.innerText)) {
@@ -77,6 +77,14 @@ function getTitleInfo(craigslistPostInfo) {
   return craigslistPostInfo;
 }
 
+function getAddress(craigslistPostInfo) {
+  const addressArray = document.querySelectorAll('div.mapaddress');
+  if (addressArray && addressArray.length && addressArray.length === 1) {
+    craigslistPostInfo.address = addressArray[0].innerText;
+  }
+  return craigslistPostInfo;
+}
+
 function getAllCraigslistPostInfo() {
   const firstRow = document.getElementsByClassName('shared-line-bubble');
   let craigslistPostInfo = {};
@@ -90,16 +98,25 @@ function getAllCraigslistPostInfo() {
     }
     craigslistPostInfo = getSecondRowInfo(craigslistPostInfo);
     craigslistPostInfo = getTitleInfo(craigslistPostInfo);
+    craigslistPostInfo = getAddress(craigslistPostInfo);
     craigslistPostInfo.url = window.location.href;
     craigslistPostInfo.id = window.location.href.match(/\d+\.html/i)[0].replace(/\.html/i, '');
     return craigslistPostInfo;
   }
 }
 
+function assembleSpreadsheetRowText(craigslistPostInfo) {
+  return craigslistPostInfo.price + "\t" + craigslistPostInfo.title + "\t" + craigslistPostInfo.address + "\t" + craigslistPostInfo.numBedrooms + "\t" + craigslistPostInfo.numBathrooms + "\t" + craigslistPostInfo.squareFootage + "\t" + craigslistPostInfo.parking + "\t" + craigslistPostInfo.housingType + "\t" + craigslistPostInfo.url + "\t" + craigslistPostInfo.id;
+}
+
 chrome.runtime.onMessage.addListener((request, sender) => {
   switch(request.message) {
     case 'GET CL INFO':
       chrome.runtime.sendMessage({ message: 'CL POST INFO', craigslistPostInfo: getAllCraigslistPostInfo() });
+      const allCraigslistPostInfo = getAllCraigslistPostInfo();
+      const spreadsheetRowText = assembleSpreadsheetRowText(allCraigslistPostInfo);
+      alert(spreadsheetRowText);
+      break;
     default:
       // Do nothing
   }
