@@ -12,6 +12,6 @@
 4. Paste into a spreadsheet of your choosing. The tabs should put each piece of info into its own cell in its own column.
 
 ## Upcoming features
-1. Allow users to re-order the info/cells (i.e., via a *Settings* page)spreadsheets do not need to be designed around this end result
+1. Allow users to re-order the info/cells (i.e., via a *Settings* page) spreadsheets do not need to be designed around this end result
 2. Possibly add similar functionality for additional sites (not just Craigslist)
 3. More TBA
