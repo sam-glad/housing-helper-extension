@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener((request, sender) => {
   switch(request.message) {
-    case 'GET CL INFO':
+    case ENUM.getCraigslistPostInfo:
       const allCraigslistPostInfo = new CraigslistPostInfo();
       const spreadsheetRowText = allCraigslistPostInfo.assembleSpreadsheetRowText();
       alert(spreadsheetRowText);
