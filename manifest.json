@@ -3,11 +3,11 @@
   "version": "1.0.0.0",
   "permissions": ["tabs", "activeTab", "<all_urls>"],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background/icon-click.js"]
   },
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["content.js"],
+    "js": ["content/craigslist-post-info.js", "content/on-message.js"],
     "run_at": "document_start"
   }],
   "browser_action": {
