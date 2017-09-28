@@ -19,6 +19,7 @@ class CraigslistPostInfo {
   getBedBathArray(firstRow) {
     const bedsAndBaths = firstRow[0];
     const bedBathArray = firstRow[0].textContent.split(' / ');
+    // These should always exist and be usable values
     if (!bedBathArray || !bedBathArray.length || bedBathArray.length !== 2) {
       const errorMessage = 'Ya dun goofed - something went wrong while trying to get bedroom and bathroom count :(';
       alert(errorMessage);
@@ -107,7 +108,6 @@ class CraigslistPostInfo {
   getCraigslistPostId() {
     this.craigslistPostId = window.location.href.match(/\d+\.html/i)[0].replace(/\.html/i, '');
   }
-
 
   // Usage: copy the returned result and paste it into a cell in a spreadsheet
   assembleSpreadsheetRowText() {
