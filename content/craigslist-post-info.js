@@ -110,10 +110,20 @@ class CraigslistPostInfo {
   }
 
   // Usage: copy the returned result and paste it into a cell in a spreadsheet
-  assembleSpreadsheetRowText() {
-    return this.price + "\t" + this.title + "\t" + this.address + 
-      "\t" + this.numBedrooms + "\t" + this.numBathrooms + "\t" + 
-      this.squareFootage + "\t" + this.parking + "\t" + 
-      this.housingType + "\t" + this.url + "\t" + this.craigslistPostId;
+  assembleSpreadsheetRowText(callback) {
+    let stringForSpreadsheetRow = '';
+
+    // TODO: Sort attributes by position first
+    chrome.storage.sync.get({
+      attributes: CONSTANTS.defaultAttributes
+    },
+    (response) => {
+      response.attributes.forEach(attribute => {
+        stringForSpreadsheetRow += `${this[attribute.camelCaseName]} \t`;
+      });
+
+      // I.e., alert the string so the user can copy/paste into a spreadsheet
+      callback(stringForSpreadsheetRow);
+    });
   }
 }

@@ -2,8 +2,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   switch(request.message) {
     case ENUM.getCraigslistPostInfo:
       const allCraigslistPostInfo = new CraigslistPostInfo();
-      const spreadsheetRowText = allCraigslistPostInfo.assembleSpreadsheetRowText();
-      alert(spreadsheetRowText);
+      allCraigslistPostInfo.assembleSpreadsheetRowText(alert);
       break;
     default:
       // Do nothing
