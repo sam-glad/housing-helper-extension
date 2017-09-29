@@ -3,7 +3,7 @@
 1. Either clone this repo or download the zip and extract it anywhere you prefer.
 2. In your omnibox (address bar), navigate to chrome://extensions
 3. As shown above, check off **Developer mode** so that you can use local files for extensions.
-4. Click **Load unpacked extension** and select the directory of the cloned repo.
+4. Click **Load unpacked extension** and select the directory created when you either cloned the repo or extracted that zip file.
 
 ## Use
 1. Navigate to a Craigslist post for a specific apartment/house/etc.
