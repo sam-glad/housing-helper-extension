@@ -18,6 +18,7 @@ function restoreOptions() {
   }, (response) => {
     const optionsForm = document.getElementById('options-form');
     if (response.attributes && response.attributes.length && response.attributes.length > 0) {
+      response.attributes.sort(function(a, b) { return a.position - b.position; });
       response.attributes.forEach(attribute => {
         addAttributeInputToForm(optionsForm, attribute)
       });
@@ -60,7 +61,8 @@ function saveOptions() {
   chrome.storage.sync.set({
     attributes: attributesToSave
   }, () => {
-    showOptionsSavedFeedback()
+    // TODO: re-sort and remove/re-add the attributes from/to the DOM
+    showOptionsSavedFeedback();
   });
 }
 

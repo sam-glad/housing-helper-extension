@@ -118,6 +118,7 @@ class CraigslistPostInfo {
       attributes: CONSTANTS.defaultAttributes
     },
     (response) => {
+      response.attributes.sort(function(a, b) { return a.position - b.position; });
       response.attributes.forEach(attribute => {
         stringForSpreadsheetRow += `${this[attribute.camelCaseName]} \t`;
       });
