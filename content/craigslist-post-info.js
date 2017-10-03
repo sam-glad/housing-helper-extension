@@ -89,9 +89,18 @@ class CraigslistPostInfo {
     const titleSpan = [].slice.call(document.querySelectorAll('h2.postingtitle')[0].children).filter(child => child.className === 'postingtitletext')[0];
     const titleChildren = [].slice.call(titleSpan.children);
     this.price = parseInt(titleChildren.filter(child => child.className === 'price')[0].innerText.replace('$',''));
-    // TODO: validation
-    this.squareFootage = document.querySelectorAll('span.housing')[0].innerText.match(/\d+ft2/i)[0].match(/\d+/)[0];
+    this.getSquareFootage();
     this.title = document.getElementById('titletextonly').innerText;
+  }
+
+  getSquareFootage() {
+    const squareFootageElements = this.squareFootage = document.querySelectorAll('span.housing')[0].innerText.match(/\d+ft2/i);
+    if (squareFootageElements) {
+      this.squareFootage = squareFootageElements[0].match(/\d+/)[0];
+    }
+    else {
+      this.squareFootage = '';
+    }
   }
 
   getAddress() {
