@@ -2,12 +2,14 @@ class CraigslistPostInfo {
   constructor() {
     const firstRow = this.getFirstRow();
     const bedBathArray = this.getBedBathArray(firstRow);
+    this.getTitle();
+    this.getPrice();
     this.getNumBedrooms(bedBathArray);
     this.getNumBathrooms(bedBathArray);
     this.getAvailableDate(firstRow);
     this.getSecondRowInfo();
     this.getAddress();
-    this.getTitleInfo();
+    this.getSquareFootage();
     this.getUrl();
     this.getCraigslistPostId();
   }
@@ -46,11 +48,12 @@ class CraigslistPostInfo {
 
   getAvailableDate(firstRow) {
     if (!(firstRow && firstRow.length && firstRow.length >= 3 && firstRow[2])) { // TODO: Make this clearer?
-      console.log('No available date listed - skipping');
-      return;
+      this.availableDate = '';
+    } 
+    else {
+      const availableDateFullString = firstRow[2].textContent;
+      this.availableDate = availableDateFullString.split('available ')[1]; // E.g. 'oct 1'
     }
-    const availableDateFullString = firstRow[2].textContent;
-    this.availableDate = availableDateFullString.split('available ')[1]; // E.g. 'oct 1'
   }
 
   // Lack of IDs means we just have to iterate over the relevant spans
@@ -77,7 +80,7 @@ class CraigslistPostInfo {
   }
 
   // Title, price, and square footage
-  getTitleInfo() {
+  getPrice() {
     const titleArray = document.querySelectorAll('h2.postingtitle');
     if (titleArray.length && titleArray.length !== 1) {
       const errorMessage = 'Something went wrong while trying to get the title :(';
@@ -89,7 +92,9 @@ class CraigslistPostInfo {
     const titleSpan = [].slice.call(document.querySelectorAll('h2.postingtitle')[0].children).filter(child => child.className === 'postingtitletext')[0];
     const titleChildren = [].slice.call(titleSpan.children);
     this.price = parseInt(titleChildren.filter(child => child.className === 'price')[0].innerText.replace('$',''));
-    this.getSquareFootage();
+  }
+
+  getTitle() {
     this.title = document.getElementById('titletextonly').innerText;
   }
 
