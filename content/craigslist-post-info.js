@@ -99,6 +99,9 @@ class CraigslistPostInfo {
     if (addressArray && addressArray.length && addressArray.length === 1) {
       this.address = addressArray[0].innerText;
     }
+    else {
+      this.address = '';
+    }
   }
 
   getUrl() {
