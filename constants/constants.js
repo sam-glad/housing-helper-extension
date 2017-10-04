@@ -10,5 +10,13 @@ const CONSTANTS = {
     { name: 'Housing Type', camelCaseName: 'housingType', position: 8 },
     { name: 'URL', camelCaseName: 'url', position: 9 },
     { name: 'Craigslist Post ID', camelCaseName: 'craigslistPostId', position: 10 }
-  ]
+  ],
+  regexes: {
+    hotpads: {
+      base: /https?\:\/\/hotpads.com\//i
+    },
+    craigslist: {
+      housingListing: /https?\:\/\/denver.craigslist.org\/apa\/d\//i
+    }
+  }
 }
