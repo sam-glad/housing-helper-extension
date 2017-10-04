@@ -5,7 +5,8 @@ chrome.runtime.onMessage.addListener((request, sender) => {
       allCraigslistPostInfo.assembleSpreadsheetRowText(alert);
       break;
     case ENUM.getHotPadsInfo:
-      alert('TODO: GET HOTPADS INFO');
+      const allHotPadPostInfo = new HotPadPostInfo();
+      allHotPadPostInfo.assembleSpreadsheetRowText(alert);
       break;
     default:
       // Do nothing

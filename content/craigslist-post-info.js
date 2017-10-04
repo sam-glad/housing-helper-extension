@@ -1,5 +1,6 @@
-class CraigslistPostInfo {
+class CraigslistPostInfo extends HousingPosting {
   constructor() {
+    super();
     const firstRow = this.getFirstRow();
     const bedBathArray = this.getBedBathArray(firstRow);
     this.getTitle();
@@ -124,24 +125,5 @@ class CraigslistPostInfo {
 
   getCraigslistPostId() {
     this.craigslistPostId = window.location.href.match(/\d+\.html/i)[0].replace(/\.html/i, '');
-  }
-
-  // Usage: copy the returned result and paste it into a cell in a spreadsheet
-  assembleSpreadsheetRowText(callback) {
-    let stringForSpreadsheetRow = '';
-
-    // TODO: Sort attributes by position first
-    chrome.storage.sync.get({
-      attributes: CONSTANTS.defaultAttributes
-    },
-    (response) => {
-      response.attributes.sort(function(a, b) { return a.position - b.position; });
-      response.attributes.forEach(attribute => {
-        stringForSpreadsheetRow += `${this[attribute.camelCaseName]} \t`;
-      });
-
-      // I.e., alert the string so the user can copy/paste into a spreadsheet
-      callback(stringForSpreadsheetRow);
-    });
   }
 }
