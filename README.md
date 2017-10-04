@@ -6,12 +6,14 @@
 4. Click **Load unpacked extension** and select the directory created when you either cloned the repo or extracted that zip file.
 
 ## Use
-1. Navigate to a Craigslist post for a specific apartment/house/etc.
-2. Click on the extension's icon (to the right of the omnibox). An alert will pop up with the details of the post separated by tabs.
-3. Copy the text content of the alert box.
-4. Paste into a spreadsheet of your choosing. The tabs should put each piece of info into its own cell in its own column.
+Assuming you have a spreadsheet where you're storing your housing postings...
+
+1. Navigate to chrome://extensions in the browser. Under this extension, click on **Options** and reorder the attributes shown so that the order is the same as that of your spreadsheet's column's. *For instance, if your spreadsheet's first column is Title, set Title to 1.*
+2. Navigate to a Craigslist or HotPads post for a specific apartment/house/etc.
+3. Click on the extension's icon (to the right of the omnibox). An alert will pop up with the details of the post separated by tabs.
+4. Copy the text content of the alert box.
+5. Paste into a spreadsheet of your choosing. The tabs should put each piece of info into its own cell in its own column.
 
 ## Upcoming features
-1. Allow users to re-order the info/cells (i.e., via a *Settings* page) spreadsheets do not need to be designed around this end result
-2. Possibly add similar functionality for additional sites (not just Craigslist)
-3. More TBA
+1. Craigslist: Include contact info (currently only available for HotPads)
+2. More TBA
