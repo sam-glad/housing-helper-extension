@@ -11,6 +11,7 @@ class HotPadPostInfo extends HousingPosting {
     this.craigslistPostId = '';
     this.getContactInfo();
     this.getUrl();
+    this.getAvailableDate();
   }
 
   getPrice() {
@@ -52,12 +53,16 @@ class HotPadPostInfo extends HousingPosting {
   }
 
   getContactInfo() {
-    const name = document.querySelector('div.ContactListedBy').children[0].firstChild.innerText.replace(/\n/g, ' ');
+    const name = document.querySelector('div.ContactListedBy').children[0].firstChild.innerText.replace(/\n/g, ' ').trim();
     const phone = document.querySelector('a.ContactListedBy-listedby-phone-link').innerText;
     this.contactInfo = `${name}: ${phone}`;
   }
 
   getUrl() {
     this.url = window.location.href.match(CONSTANTS.regexes.hotpads.housingListing)[0];
+  }
+
+  getAvailableDate() {
+    this.availableDate = document.querySelector('div.SingleModelHdpHeader-availability').firstChild.innerText;
   }
 }

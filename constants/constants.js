@@ -10,7 +10,8 @@ const CONSTANTS = {
     { name: 'Housing Type', camelCaseName: 'housingType', position: 8 },
     { name: 'URL', camelCaseName: 'url', position: 9 },
     { name: 'Craigslist Post ID', camelCaseName: 'craigslistPostId', position: 10 },
-    { name: 'Contact Info', camelCaseName: 'contactInfo', position: 11 }
+    { name: 'Contact Info', camelCaseName: 'contactInfo', position: 11 },
+    { name: 'Available Date', camelCaseName: 'availableDate', position: 12 }
   ],
   regexes: {
     hotpads: {
